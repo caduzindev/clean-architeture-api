@@ -2,7 +2,6 @@ import { AddAccountRepository } from '../../../../data/protocols/add-account-rep
 import { AccountModel } from '../../../../domain/models/account'
 import { AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
-
 export class AccountMongoRepository implements AddAccountRepository {
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = MongoHelper.getCollection('accounts')
@@ -11,11 +10,6 @@ export class AccountMongoRepository implements AddAccountRepository {
       _id: result.insertedId
     })
 
-    return {
-      id: String(resultModel?._id),
-      name: resultModel?.name,
-      email: resultModel?.email,
-      password: resultModel?.password
-    }
+    return MongoHelper.map(resultModel)
   }
 }
