@@ -6,10 +6,14 @@ describe('Account Mongo Repository', () => {
     const uri = process.env.MONGO_URL ? process.env.MONGO_URL : ''
     await MongoHelper.connect(uri)
   })
+
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
 
+  beforeEach(async () => {
+    await MongoHelper.getCollection('accounts').deleteMany({})
+  })
   const makeSut = (): AccountMongoRepository => {
     return new AccountMongoRepository()
   }
