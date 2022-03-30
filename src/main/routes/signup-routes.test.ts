@@ -16,10 +16,6 @@ describe('SignUp Routes', () => {
     await MongoHelper.getCollection('accounts').deleteMany({})
   })
   test('Should return an account on success', async () => {
-    app.get('/test_cors', (req, res) => {
-      res.send()
-    })
-
     await request(app)
       .post('/api/signup')
       .send({
